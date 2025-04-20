@@ -1,0 +1,76 @@
+name: deploy
+
+on:
+  workflow_call:
+    inputs:
+      gh-environment:
+        required: true
+        type: string
+  # Allows us to manually run the workflow
+  workflow_dispatch:
+    inputs:
+      gh-environment:
+        required: true
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+        default: development
+
+concurrency:
+  group: ${{ inputs.gh-environment }}-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment: ${{ inputs.gh-environment }}
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: build
+        run: npm run build
+
+      - name: Configure AWS credentials from OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: us-east-1
+
+      - name: cdk deploy to development
+        run: npm run deploy:ci
+        env:
+          STAGE: ${{ vars.stage }}
+
+  notify-slack-if-failure:
+    needs: [deploy]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send failure notification to Slack
+        uses: slackapi/slack-github-action@v2
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_DEPLOY_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.DEVOPS_NOTIFICATIONS_SLACK_CHANNEL_ID }}
+            text: ":exclamation: Workflow *${{ github.workflow }}* failed. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View the run>"
+            blocks:
+              - type: "section"
+                text:
+                  type: mrkdwn
+                  text: ":exclamation: Workflow *${{ github.workflow }}* failed. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View the run>"
