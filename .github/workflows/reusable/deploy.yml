@@ -51,10 +51,10 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
 
-      - name: cdk deploy to development
+      - name: cdk deploy to ${{ inputs.gh-environment }}
         run: npm run deploy:ci
         env:
-          STAGE: ${{ vars.stage }}
+          STAGE: ${{ vars.STAGE }}
 
   notify-slack-if-failure:
     needs: [deploy]
