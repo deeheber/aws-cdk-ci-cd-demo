@@ -5,7 +5,7 @@
     "aws-cdk-ci-cd-demo": "bin/aws-cdk-ci-cd-demo.js"
   },
   "scripts": {
-    "build": "npm run tsc:build && npm run format:ci && npm run lint:ci",
+    "build": "npm run tsc:build && npm run format:ci && npm run lint:ci && npm run test",
     "cdk": "cdk",
     "deploy": "npm run cdk deploy -- --all",
     "deploy:ci": "npm run cdk deploy -- --require-approval never --asset-parallelism true --all",
@@ -25,6 +25,7 @@
     "@types/node": "22.14.1",
     "@typescript-eslint/eslint-plugin": "^8.30.1",
     "aws-cdk": "^2.1010.0",
+    "esbuild": "^0.25.2",
     "eslint": "^9.25.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "jest": "^29.7.0",
@@ -34,6 +35,9 @@
     "typescript": "~5.8.3"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.788.0",
+    "@aws-sdk/lib-dynamodb": "^3.789.0",
+    "@types/aws-lambda": "^8.10.149",
     "aws-cdk-lib": "2.190.0",
     "constructs": "^10.0.0"
   }
