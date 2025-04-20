@@ -10,7 +10,7 @@ jobs:
   staging-deploy:
     uses: ./.github/workflows/reusable/deploy.yml
     with:
-      gh-environment: staging
+      GH-ENV: staging
     secrets: inherit
 
   production-deploy:
@@ -18,5 +18,5 @@ jobs:
     needs: staging-deploy
     uses: ./.github/workflows/reusable/deploy.yml
     with:
-      gh-environment: production
+      GH-ENV: production
     secrets: inherit

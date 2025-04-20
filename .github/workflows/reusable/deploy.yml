@@ -3,13 +3,13 @@ name: deploy
 on:
   workflow_call:
     inputs:
-      gh-environment:
+      GH-ENV:
         required: true
         type: string
   # Allows us to manually run the workflow
   workflow_dispatch:
     inputs:
-      gh-environment:
+      GH-ENV:
         required: true
         type: choice
         options:
@@ -19,12 +19,12 @@ on:
         default: development
 
 concurrency:
-  group: ${{ inputs.gh-environment }}-deploy
+  group: ${{ inputs.GH-ENV }}-deploy
   cancel-in-progress: true
 
 jobs:
   deploy:
-    environment: ${{ inputs.gh-environment }}
+    environment: ${{ inputs.GH-ENV }}
     runs-on: ubuntu-latest
 
     permissions:
@@ -51,7 +51,7 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
 
-      - name: cdk deploy to ${{ inputs.gh-environment }}
+      - name: cdk deploy to ${{ inputs.GH-ENV }}
         run: npm run deploy:ci
         env:
           STAGE: ${{ vars.STAGE }}

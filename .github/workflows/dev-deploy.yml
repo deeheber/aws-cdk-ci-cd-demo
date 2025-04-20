@@ -10,5 +10,5 @@ jobs:
   dev-deploy:
     uses: ./.github/workflows/reusable/deploy.yml
     with:
-      gh-environment: development
+      GH-ENV: development
     secrets: inherit
