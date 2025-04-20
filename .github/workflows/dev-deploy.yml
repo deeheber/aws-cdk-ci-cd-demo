@@ -8,7 +8,7 @@ on:
 
 jobs:
   dev-deploy:
-    uses: ./.github/workflows/reusable/deploy.yml
+    uses: ./.github/workflows/deploy.yml
     with:
       GH-ENV: development
     secrets: inherit

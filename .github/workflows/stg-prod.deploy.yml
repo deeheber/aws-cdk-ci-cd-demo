@@ -8,7 +8,7 @@ on:
 
 jobs:
   staging-deploy:
-    uses: ./.github/workflows/reusable/deploy.yml
+    uses: ./.github/workflows/deploy.yml
     with:
       GH-ENV: staging
     secrets: inherit
@@ -16,7 +16,7 @@ jobs:
   production-deploy:
     # Staging deploy must succeed before a Production deploy can start
     needs: staging-deploy
-    uses: ./.github/workflows/reusable/deploy.yml
+    uses: ./.github/workflows/deploy.yml
     with:
       GH-ENV: production
     secrets: inherit
