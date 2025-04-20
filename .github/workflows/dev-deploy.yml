@@ -12,3 +12,6 @@ jobs:
     with:
       GH-ENV: development
     secrets: inherit
+    permissions:
+      id-token: write
+      contents: read

@@ -12,6 +12,9 @@ jobs:
     with:
       GH-ENV: staging
     secrets: inherit
+    permissions:
+      id-token: write
+      contents: read
 
   production-deploy:
     # Staging deploy must succeed before a Production deploy can start
@@ -20,3 +23,6 @@ jobs:
     with:
       GH-ENV: production
     secrets: inherit
+    permissions:
+      id-token: write
+      contents: read
