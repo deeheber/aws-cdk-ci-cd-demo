@@ -1,20 +1,27 @@
 #!/usr/bin/env node
-import * as cdk from 'aws-cdk-lib';
-import { AwsCdkCiCdDemoStack } from '../lib/aws-cdk-ci-cd-demo-stack';
+import { App } from 'aws-cdk-lib'
 
-const app = new cdk.App();
-new AwsCdkCiCdDemoStack(app, 'AwsCdkCiCdDemoStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
+import { CiCdDemoStack } from '../lib/ci-cd-demo-stack'
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+// Environment variables validation
+if (!process.env.CDK_DEFAULT_ACCOUNT || !process.env.CDK_DEFAULT_REGION) {
+  throw new Error(
+    'CDK_DEFAULT_ACCOUNT or CDK_DEFAULT_REGION is not set...did you authenticate with the AWS CLI?',
+  )
+}
+if (!process.env.STAGE) {
+  throw new Error(
+    'STAGE is not set. i.e. Development, Staging, Production, Sandbox etc.',
+  )
+}
 
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
+const stage = process.env.STAGE.toLowerCase().slice(0, 4)
 
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
-});
+const app = new App()
+new CiCdDemoStack(app, `${stage}-ci-cd-demo`, {
+  env: {
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+    region: process.env.CDK_DEFAULT_REGION,
+  },
+  stage,
+})
