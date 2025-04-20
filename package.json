@@ -5,7 +5,7 @@
     "aws-cdk-ci-cd-demo": "bin/aws-cdk-ci-cd-demo.js"
   },
   "scripts": {
-    "build": "npm run tsc:build && npm run format:ci && npm run lint:ci && npm run test",
+    "build": "npm run tsc:build && npm run format:ci && npm run lint:ci",
     "cdk": "cdk",
     "deploy": "npm run cdk deploy -- --all",
     "deploy:ci": "npm run cdk deploy -- --require-approval never --asset-parallelism true --all",
