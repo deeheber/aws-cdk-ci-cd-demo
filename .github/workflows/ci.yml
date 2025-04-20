@@ -54,12 +54,12 @@ jobs:
       - name: cdk synth against development
         run: npm run synth:silent
         env:
-          STAGE: ${{ vars.stage }}
+          STAGE: ${{ vars.STAGE }}
 
       - name: cdk diff against development
         uses: corymhall/cdk-diff-action@v1
         env:
-          STAGE: ${{ vars.stage }}
+          STAGE: ${{ vars.STAGE }}
 
         with:
           # Docs if we want to fail on destructive changes + add exceptions

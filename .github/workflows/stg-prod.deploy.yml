@@ -5,96 +5,18 @@ on:
   push:
     tags:
       - 'release-*'
-  workflow_dispatch:
-
-concurrency:
-  group: stg-prod-deploy-revolver
-  cancel-in-progress: true
 
 jobs:
   staging-deploy:
-    environment: staging
-    runs-on: ubuntu-latest
-
-    permissions:
-      id-token: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: build
-        run: npm run build
-
-      - name: Configure AWS credentials from OIDC
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          aws-region: us-east-1
-
-      - name: cdk deploy to staging
-        run: npm run deploy:ci
-        env:
-          STAGE: ${{ vars.STAGE }}
+    uses: ./.github/workflows/reusable/deploy.yml
+    with:
+      GH-ENV: staging
+    secrets: inherit
 
   production-deploy:
     # Staging deploy must succeed before a Production deploy can start
     needs: staging-deploy
-    environment: production
-    runs-on: ubuntu-latest
-
-    permissions:
-      id-token: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: build
-        run: npm run build
-
-      - name: Configure AWS credentials from OIDC
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          aws-region: us-east-1
-
-      - name: cdk deploy to production
-        run: npm run deploy:ci
-        env:
-          STAGE: ${{ vars.STAGE }}
-
-  notify-slack-if-failure:
-    needs: [staging-deploy, production-deploy]
-    if: failure()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send failure notification to Slack
-        uses: slackapi/slack-github-action@v2
-        with:
-          method: chat.postMessage
-          token: ${{ secrets.SLACK_DEPLOY_BOT_TOKEN }}
-          payload: |
-            channel: ${{ secrets.DEVOPS_NOTIFICATIONS_SLACK_CHANNEL_ID }}
-            text: ":exclamation: Workflow *${{ github.workflow }}* failed. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View the run>"
-            blocks:
-              - type: "section"
-                text:
-                  type: mrkdwn
-                  text: ":exclamation: Workflow *${{ github.workflow }}* failed. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View the run>"
+    uses: ./.github/workflows/reusable/deploy.yml
+    with:
+      GH-ENV: production
+    secrets: inherit
