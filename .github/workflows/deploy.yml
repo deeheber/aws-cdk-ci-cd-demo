@@ -18,7 +18,7 @@ on:
           - production
         default: development
 
-run-name: Deploying to ${{ inputs.GH-ENV }} by ${{ github.actor }}
+run-name: 'Deploying to ${{ inputs.GH-ENV }} by ${{ github.actor }}'
 
 concurrency:
   group: ${{ inputs.GH-ENV }}-deploy
