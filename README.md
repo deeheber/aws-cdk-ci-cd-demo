@@ -34,7 +34,7 @@ This is a minimal API Gateway with API Key auth > Lambda > DynamoDB setup
 
 ```bash
 curl --location 'https://api-id.execute-api.aws-region.amazonaws.com/v1/my-api' \
---header 'x-api-key: your-api-key
+--header 'x-api-key: your-api-key'
 ```
 
 - There's also a POST endpoint where you can input anything in the body (not best practice but this is minimal demo of CI/CD not code)
