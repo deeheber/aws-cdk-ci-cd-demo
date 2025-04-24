@@ -65,4 +65,4 @@ jobs:
           # Docs if we want to fail on destructive changes + add exceptions
           # https://github.com/corymhall/cdk-diff-action
           failOnDestructiveChanges: false
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          githubToken: ${{ github.token }}
