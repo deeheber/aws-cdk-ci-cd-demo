@@ -21,6 +21,7 @@ import {
 } from 'aws-cdk-lib/aws-lambda'
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'
 import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs'
+import { Bucket } from 'aws-cdk-lib/aws-s3'
 import { Construct } from 'constructs'
 
 interface CiCdDemoStackProps extends StackProps {
@@ -122,6 +123,13 @@ export class CiCdDemoStack extends Stack {
       description: `API key for the ${apiId}-usage-plan`,
     })
     usagePlan.addApiKey(apiKey)
+
+    new Bucket(this, `${id}-bucket`, {
+      bucketName: `${id}-bucket`,
+      removalPolicy:
+        props.stage === 'prod' ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
+      autoDeleteObjects: props.stage !== 'prod',
+    })
 
     // Outputs
     new CfnOutput(this, `${apiId}-key`, { value: apiKey.keyId })
