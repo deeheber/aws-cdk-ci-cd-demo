@@ -125,7 +125,7 @@ export class CiCdDemoStack extends Stack {
     usagePlan.addApiKey(apiKey)
 
     new Bucket(this, `${id}-bucket`, {
-      bucketName: `${id}-bucket`,
+      bucketName: `bucket`,
       removalPolicy:
         props.stage === 'prod' ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
       autoDeleteObjects: props.stage !== 'prod',
