@@ -1,6 +1,6 @@
 # AWS CI/CD Demo
 
-This is a repo with minimal code to demo a way to do CI/CD with the AWS CDK for TypeScript and Github Actions.
+This is a repo with minimal code to demo a way to do CI/CD with the AWS CDK for TypeScript and Github Actions. As demoed on [The Zacks' Show Talking AWS](https://www.youtube.com/watch?v=Q7I4YqwpX5M0).
 
 ## How to use
 
