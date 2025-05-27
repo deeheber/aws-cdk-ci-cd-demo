@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/python:3.13-arm64
+FROM --platform=linux/arm64 public.ecr.aws/lambda/python:3.13-arm64
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt --target .

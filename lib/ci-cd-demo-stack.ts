@@ -12,7 +12,6 @@ import {
   UsagePlan,
 } from 'aws-cdk-lib/aws-apigateway'
 import { AttributeType, TableV2 } from 'aws-cdk-lib/aws-dynamodb'
-import { Platform } from 'aws-cdk-lib/aws-ecr-assets'
 import {
   Architecture,
   DockerImageCode,
@@ -80,12 +79,7 @@ export class CiCdDemoStack extends Stack {
     const listFuncId = `${id}-list`
     const listFunction = new DockerImageFunction(this, listFuncId, {
       functionName: listFuncId,
-      code: DockerImageCode.fromImageAsset('functions/list', {
-        buildArgs: {
-          platform: 'linux/arm64',
-        },
-        platform: Platform.LINUX_ARM64,
-      }),
+      code: DockerImageCode.fromImageAsset('functions/list'),
       logGroup: listFunctionLogGroup,
       architecture: Architecture.ARM_64,
       timeout: Duration.seconds(20),
