@@ -58,6 +58,7 @@ jobs:
         run: npm run deploy:ci
         env:
           STAGE: ${{ vars.STAGE }}
+          DOCKER_BUILDKIT: 1
 
   notify-slack-if-failure:
     needs: [deploy]
