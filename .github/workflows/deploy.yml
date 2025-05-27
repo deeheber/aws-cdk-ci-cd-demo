@@ -54,6 +54,10 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: us-east-1
 
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
       - name: cdk deploy to ${{ inputs.GH-ENV }}
         run: npm run deploy:ci
         env:
