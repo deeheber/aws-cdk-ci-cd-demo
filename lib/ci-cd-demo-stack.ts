@@ -82,7 +82,7 @@ export class CiCdDemoStack extends Stack {
       functionName: listFuncId,
       code: DockerImageCode.fromImageAsset('functions/list', {
         buildArgs: {
-          PLATFORM: 'linux/arm64',
+          platform: 'linux/arm64',
         },
         platform: Platform.LINUX_ARM64,
       }),
