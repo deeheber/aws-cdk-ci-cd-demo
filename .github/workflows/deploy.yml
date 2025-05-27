@@ -58,6 +58,8 @@ jobs:
         with:
           platforms: arm64
 
+      - uses: docker/setup-buildx-action@v3
+
       - name: cdk deploy to ${{ inputs.GH-ENV }}
         run: npm run deploy:ci
         env:
