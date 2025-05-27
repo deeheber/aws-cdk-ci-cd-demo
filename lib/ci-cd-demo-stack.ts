@@ -81,6 +81,9 @@ export class CiCdDemoStack extends Stack {
     const listFunction = new DockerImageFunction(this, listFuncId, {
       functionName: listFuncId,
       code: DockerImageCode.fromImageAsset('functions/list', {
+        buildArgs: {
+          PLATFORM: 'linux/arm64',
+        },
         platform: Platform.LINUX_ARM64,
       }),
       logGroup: listFunctionLogGroup,
