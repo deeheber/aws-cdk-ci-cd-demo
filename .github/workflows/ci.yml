@@ -24,27 +24,28 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: '.nvmrc'
+          check-latest: true
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build, Format (prettier), and Lint
+      - name: Typecheck, Check Formatting, and Lint
         run: npm run build
 
       - name: Run tests
         run: npm run test
 
       - name: configure AWS credentials from OIDC
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
         with:
           mask-aws-account-id: true
           # 15 minutes aka the shortest time allowed
@@ -58,12 +59,13 @@ jobs:
           STAGE: ${{ vars.STAGE }}
 
       - name: cdk diff against development
-        uses: corymhall/cdk-diff-action@v1
+        uses: corymhall/cdk-diff-action@ad67041313333f7f2bd26b33f18fb134610a971e # v2.0.9
         env:
           STAGE: ${{ vars.STAGE }}
 
         with:
           # Docs if we want to fail on destructive changes + add exceptions
           # https://github.com/corymhall/cdk-diff-action
+          diffMethod: change-set
           failOnDestructiveChanges: false
           githubToken: ${{ github.token }}

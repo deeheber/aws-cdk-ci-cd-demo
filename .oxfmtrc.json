@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "singleQuote": true,
+  "semi": false,
+  "printWidth": 80,
+  "sortImports": {},
+  "ignorePatterns": [
+    "node_modules/**",
+    "cdk.out/**",
+    "dist/**",
+    "package-lock.json"
+  ]
+}

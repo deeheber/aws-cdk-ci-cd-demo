@@ -58,7 +58,8 @@ export class CiCdDemoStack extends Stack {
     const createFuncId = `${id}-create`
     const createFunction = new NodejsFunction(this, createFuncId, {
       functionName: createFuncId,
-      runtime: Runtime.NODEJS_22_X,
+      runtime: Runtime.NODEJS_24_X,
+      bundling: { bundleAwsSDK: true },
       entry: 'functions/create/index.ts',
       logGroup: createFunctionLogGroup,
       architecture: Architecture.ARM_64,
