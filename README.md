@@ -52,7 +52,6 @@ The app lowercases `STAGE` and takes its first four characters to form the stack
 | `development` | `deve-ci-cd-demo` | Delete               |
 | `staging`     | `stag-ci-cd-demo` | Delete               |
 | `production`  | `prod-ci-cd-demo` | Retain               |
-| `dev`         | `dev-ci-cd-demo`  | Delete               |
 
 Use the same stage value for local commands and the corresponding GitHub environment. Any value starting with `prod` uses the retention policy. Values with the same first four characters target the same stack in a given account and region.
 
@@ -96,7 +95,7 @@ POST assigns each item a generated `id`. Request validation is minimal, and list
 
    Add approval rules to `production` if you want a manual deployment gate.
 
-4. For failure notifications, create a [Slack bot](https://docs.slack.dev/tools/slack-github-action/sending-data-slack-api-method/) with `chat:write`, install it in your workspace, and invite it to the channel. Add repository secrets `SLACK_DEPLOY_BOT_TOKEN` and `DEVOPS_NOTIFICATIONS_SLACK_CHANNEL_ID`. To run without Slack, remove the `notify-slack-if-failure` job from `deploy.yml`.
+4. For failure notifications, create a [Slack app](https://docs.slack.dev/tools/slack-github-action/sending-data-slack-api-method/) with `chat:write`, install it in your workspace, and invite it to the channel. Add repository secrets `SLACK_DEPLOY_BOT_TOKEN` and `DEVOPS_NOTIFICATIONS_SLACK_CHANNEL_ID`. To run without Slack, remove the `notify-slack-if-failure` job from `deploy.yml`.
 
 ### Workflow triggers
 
