@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "oxc", "vitest"],
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    "no-console": "warn",
+    "vitest/expect-expect": [
+      "error",
+      {
+        "assertFunctionNames": [
+          "expect",
+          "*.hasResource",
+          "*.hasResourceProperties"
+        ]
+      }
+    ]
+  },
+  "ignorePatterns": ["node_modules/**", "cdk.out/**", "dist/**"]
+}

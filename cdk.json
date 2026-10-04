@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/aws-cdk-ci-cd-demo.ts",
+  "app": "npx tsx bin/aws-cdk-ci-cd-demo.ts",
   "watch": {
     "include": ["**"],
     "exclude": [
