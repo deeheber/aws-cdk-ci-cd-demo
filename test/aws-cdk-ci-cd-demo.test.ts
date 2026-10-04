@@ -49,6 +49,19 @@ test.each([
   })
 })
 
+test('uses Node.js 24 and ARM64 for the Lambda functions', () => {
+  developmentTemplate.hasResourceProperties('AWS::Lambda::Function', {
+    FunctionName: 'dev-ci-cd-demo-create',
+    Runtime: 'nodejs24.x',
+    Architectures: ['arm64'],
+  })
+  developmentTemplate.hasResourceProperties('AWS::Lambda::Function', {
+    FunctionName: 'dev-ci-cd-demo-list',
+    PackageType: 'Image',
+    Architectures: ['arm64'],
+  })
+})
+
 test.each([
   ['development', developmentTemplate, 'Delete'],
   ['production', productionTemplate, 'Retain'],
