@@ -5,15 +5,15 @@
   "scripts": {
     "build": "npm run typecheck && npm run format:ci && npm run lint:ci",
     "cdk": "cdk",
-    "deploy": "cdk deploy -- --all",
-    "deploy:ci": "cdk deploy -- --require-approval never --asset-parallelism true --all",
+    "deploy": "cdk deploy --all",
+    "deploy:ci": "cdk deploy --require-approval never --asset-parallelism true --all",
     "diff": "cdk diff",
     "format": "oxfmt --write .",
     "format:ci": "oxfmt --check .",
     "lint": "oxlint --fix",
     "lint:ci": "oxlint",
     "synth": "cdk synth",
-    "synth:silent": "cdk synth -- -q",
+    "synth:silent": "cdk synth -q",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "watch": "tsc --noEmit -w"
