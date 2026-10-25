@@ -5,40 +5,41 @@
   "scripts": {
     "build": "npm run typecheck && npm run format:ci && npm run lint:ci",
     "cdk": "cdk",
-    "deploy": "npm run cdk deploy -- --all",
-    "deploy:ci": "npm run cdk deploy -- --require-approval never --asset-parallelism true --all",
-    "diff": "npm run cdk diff",
+    "deploy": "cdk deploy --all",
+    "deploy:ci": "cdk deploy --require-approval never --asset-parallelism true --all",
+    "diff": "cdk diff",
     "format": "oxfmt --write .",
     "format:ci": "oxfmt --check .",
     "lint": "oxlint --fix",
     "lint:ci": "oxlint",
-    "synth": "npm run cdk synth",
-    "synth:silent": "npm run cdk synth -- -q",
+    "synth": "cdk synth",
+    "synth:silent": "cdk synth -q",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "watch": "tsc --noEmit -w"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.1146.0",
-    "@aws-sdk/lib-dynamodb": "^3.1146.0",
-    "aws-cdk-lib": "2.272.0",
+    "@aws-sdk/client-dynamodb": "^3.1156.0",
+    "@aws-sdk/lib-dynamodb": "^3.1156.0",
+    "aws-cdk-lib": "2.274.0",
     "constructs": "^10.8.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.164",
-    "@types/node": "24.19.1",
-    "aws-cdk": "^2.1144.0",
+    "@types/node": "24.19.2",
+    "aws-cdk": "^2.1146.1",
     "esbuild": "^0.28.2",
-    "oxfmt": "^0.71.0",
-    "oxlint": "^1.86.0",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.89.0",
     "tsx": "^4.23.15",
     "typescript": "~7.0.2",
-    "vite": "^8.3.2",
-    "vitest": "^5.0.3"
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
   },
   "engines": {
     "node": ">=24 <25"
   },
+  "packageManager": "npm@11.21.1",
   "allowScripts": {
     "esbuild": true,
     "fsevents": true
